@@ -1,0 +1,48 @@
+<!-- Body Component -->
+<div class="mt-6 max-w-xl mx-auto">
+    @if (tasks.length === 0) {
+    <div class="text-center py-8">
+        <i class="fas fa-inbox text-gray-300 text-5xl mb-3"></i>
+        <p class="text-gray-500">No tasks yet. Add one above!</p>
+    </div>
+    } @else {
+    <ul class="space-y-3">
+        @for (task of tasks; track task.id) {
+        <li class="flex items-center justify-between p-4 bg-white rounded shadow-sm border border-gray-200 hover:shadow-md transition-shadow"
+            [class.bg-gray-50]="task.completed">
+            <div (click)="toggle(task.id)" class="cursor-pointer flex-1 flex items-start gap-3 min-w-0 pr-2">
+                <div class="mt-1 flex-shrink-0">
+                    <div class="w-5 h-5 rounded border flex items-center justify-center transition-colors"
+                        [class.bg-blue-500]="task.completed" [class.border-blue-500]="task.completed"
+                        [class.border-gray-400]="!task.completed">
+                        @if (task.completed) {
+                        <i class="fas fa-check text-white text-xs"></i>
+                        }
+                    </div>
+                </div>
+                <div class="flex-1 min-w-0 overflow-hidden">
+                    <span class="block font-medium transition-colors break-words word-wrap"
+                        [class.line-through]="task.completed" [class.text-gray-400]="task.completed"
+                        [class.text-gray-800]="!task.completed"
+                        style="overflow-wrap: break-word; word-break: break-word;">
+                        {{ task.title }}
+                    </span>
+                    @if (task.description) {
+                    <span class="block text-sm mt-1 break-words" [class.text-gray-400]="task.completed"
+                        [class.text-gray-500]="!task.completed"
+                        style="overflow-wrap: break-word; word-break: break-word;">
+                        {{ task.description }}
+                    </span>
+                    }
+                </div>
+            </div>
+            <button (click)="delete(task.id)"
+                class="ml-2 p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded transition-colors flex-shrink-0"
+                title="Delete">
+                <i class="fas fa-trash text-sm"></i>
+            </button>
+        </li>
+        }
+    </ul>
+    }
+</div>
